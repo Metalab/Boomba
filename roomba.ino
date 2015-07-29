@@ -6,9 +6,6 @@
 #define I3 12  // Control pin 1 for motor 2
 #define I4 13  // Control pin 2 for motor 2
  
-int lastSpeed[2] = {0,0};
-int speed[2] = {0,0};
-
 void setup() {
     Serial.begin(115200); 
 
@@ -21,9 +18,7 @@ void setup() {
     pinMode(I4, OUTPUT);
 }
  
-void readSpeed() {
-  lastSpeed[0] = speed[0];
-  lastSpeed[1] = speed[1];
+void readSpeed(int speed[]) {
   int i = 0;
   int d = 0;
   char digits[4] = {0,0,0,0};
@@ -67,7 +62,7 @@ void readSpeed() {
   speed[1] = atoi(digits);
 }
 
-void drive() {
+void drive(int speed[]) {
     if(speed[1] < 0) {
       digitalWrite(I3, HIGH);
       digitalWrite(I4, LOW);
@@ -92,7 +87,9 @@ void drive() {
     analogWrite(E2, abs(speed[1]) * 2);
 }
 
+int speed[2] = {0,0};
+
 void loop() {
-  readSpeed();
-  drive();
+  readSpeed(speed);
+  drive(speed);
 }
