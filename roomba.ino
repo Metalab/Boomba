@@ -46,7 +46,6 @@ void readSpeed(int speed[]) {
   while(true) {
     while(!Serial.available()) {}
     d = Serial.read();
-    Serial.println(d);
     if(d == '\n')
       break;
 
